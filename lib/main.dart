@@ -175,16 +175,18 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: () => showDialog(
               context: context,
               builder: (BuildContext buildContext) {
-                return AlertDialog(
-                  backgroundColor: Colors.transparent,
+                return Alert(
+                  scrollable: true,
                   content: Padding(
                     padding: EdgeInsets.all(16.0),
-                    child: ListView(children: [
-                      Text('test'),
-                      Text('test'),
-                      Text('test'),
-                      Text('test'),
-                    ],)
+                    child: Expanded(
+                      child: ListView(children: [
+                        Text('test'),
+                        Text('test'),
+                        Text('test'),
+                        Text('test'),
+                      ],)
+                    )
                   )
                 );
               }
