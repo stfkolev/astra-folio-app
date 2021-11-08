@@ -100,10 +100,10 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     return GestureDetector(
-      onPanUpdate: (moveEvent) {
-        if(moveEvent.delta.dx > 0) {
+      onPanUpdate: (details) {
+        if(details.delta.dx > 0) {
           swipeDirection = 'left';
-        } else if(moveEvent.delta.dx < 0) {
+        } else if(details.delta.dx < 0) {
           swipeDirection = 'right';
         }
       },
@@ -152,7 +152,16 @@ class _MyHomePageState extends State<MyHomePage> {
               Expanded(
                 child:
                 _selectedEvents.length == 0 ?
-                Text('No events for this day')
+                Padding(
+                  padding: EdgeInsets.only(top: 32.0),
+                  child: Text(
+                      'No events for this day',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      )
+                  )
+                )
                     :
                 ListView(
                   children: _selectedEvents,
@@ -163,8 +172,24 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Color(0xFF135BFF),
-          onPressed: () => '',
-          tooltip: 'Increment',
+          onPressed: () => showDialog(
+              context: context,
+              builder: (BuildContext buildContext) {
+                return AlertDialog(
+                  backgroundColor: Colors.transparent,
+                  content: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: ListView(children: [
+                      Text('test'),
+                      Text('test'),
+                      Text('test'),
+                      Text('test'),
+                    ],)
+                  )
+                );
+              }
+          ),
+          tooltip: 'Add Event',
           child: Icon(Icons.add),
         ), // This trailing comma makes auto-formatting nicer for build methods.
         bottomNavigationBar: FloatingNavbar(
