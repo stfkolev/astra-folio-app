@@ -26,6 +26,7 @@ class AddEventState extends State<AddEventDialog> {
 
   @override
   void dispose() {
+
     titleController.dispose();
     descriptionController.dispose();
     dateController.dispose();

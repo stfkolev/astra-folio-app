@@ -10,10 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class EventItem extends StatefulWidget {
-  EventItem ({Key? key, required this.event, required this.onEventItemEdited}): super(key: key);
+  EventItem ({Key? key, required this.event, required this.onEventItemEdited, required this.onEventItemDeleted}): super(key: key);
 
   Event event;
   final Function(Event) onEventItemEdited;
+  final Function(Event) onEventItemDeleted;
 
   @override
   State<StatefulWidget> createState() => _EventItemState();
@@ -98,8 +99,7 @@ class _EventItemState extends State<EventItem> {
 
         switch(selected) {
           case 'delete': {
-
-            developer.log('$selected');
+           widget.onEventItemDeleted(widget.event);
             break;
           }
 
@@ -122,7 +122,6 @@ class _EventItemState extends State<EventItem> {
                               height: height - 400,
                               width: width + 400,
                               child: EditEventDialog(event: widget.event, onFormSubmit: (event) {
-                                developer.log('Title: ${event.name} -- Description: ${event.description} -- Date: ${event.timestamp.toString()}');
                                 widget.onEventItemEdited(event);
                               }),
                             );

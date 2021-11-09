@@ -31,34 +31,39 @@ class _SchedulePageState extends State<SchedulePage> {
     new Event(4, 'Каручката на бат Милчо', 'За тъпотии само', DateTime.now().add(Duration(days: 1, hours: 1, minutes: 12))),
   ];
 
+  void onEventItemEdited(ev) {
+    List<EventItem> _eventItems = eventItems;
+
+    _eventItems.removeAt(_eventItems.indexWhere((element) => element.event.id == ev.id));
+    _eventItems.add(EventItem(event: ev, onEventItemEdited: onEventItemEdited, onEventItemDeleted: onEventItemDeleted,));
+
+    setState(() {
+      eventItems = _eventItems;
+    });
+
+    updateEventItems();
+  }
+
+  onEventItemDeleted(ev) {
+    List<EventItem> _eventItems = eventItems;
+
+    _eventItems.removeAt(_eventItems.indexWhere((element) => element.event.id == ev.id));
+
+    setState(() {
+      eventItems = _eventItems;
+    });
+
+    updateEventItems();
+  }
+
   @override
   void initState() {
-    print('test');
     super.initState();
+
     _resetSelectedDate();
 
     events.forEach(
-        (element) => eventItems.add(EventItem(event: element, onEventItemEdited: (ev) {
-          List<EventItem> _eventItems = eventItems;
-
-          print('test');
-
-          _eventItems.forEach((element) {
-            developer.log(element.event.name);
-          });
-
-          _eventItems[_eventItems.indexWhere((element) => element.event.id == ev.id)].event = ev;
-
-          setState(() {
-            eventItems = _eventItems;
-          });
-
-          eventItems.forEach((element) {
-            developer.log(element.event.name);
-          });
-
-          updateEventItems();
-        },))
+        (element) => eventItems.add(EventItem(event: element, onEventItemEdited: onEventItemEdited, onEventItemDeleted: onEventItemDeleted,))
     );
 
     updateEventItems();
@@ -69,12 +74,9 @@ class _SchedulePageState extends State<SchedulePage> {
   }
 
   void updateEventItems() {
-    developer.log('update event items');
-
     _selectedEvents = [];
 
     eventItems.forEach((element) {
-      developer.log(element.event.name);
       if(element.event.timestamp.day == _selectedDate.day) {
         _selectedEvents.add(element);
       }
@@ -184,27 +186,7 @@ class _SchedulePageState extends State<SchedulePage> {
                           width: width + 400,
                           child: AddEventDialog(onFormSubmit: (event) {
                             dynamic _eventItems = eventItems;
-                            _eventItems.add(EventItem(event: event, onEventItemEdited: (ev) {
-                              List<EventItem> _eventItems = eventItems;
-
-                              print('test');
-
-                              _eventItems.forEach((element) {
-                                developer.log(element.event.name);
-                              });
-
-                              _eventItems[_eventItems.indexWhere((element) => element.event.id == ev.id)].event = ev;
-
-                              setState(() {
-                                eventItems = _eventItems;
-                              });
-
-                              eventItems.forEach((element) {
-                                developer.log(element.event.name);
-                              });
-
-                              updateEventItems();
-                            },));
+                            _eventItems.add(EventItem(event: event, onEventItemEdited: onEventItemEdited, onEventItemDeleted: onEventItemDeleted,));
 
                             setState(() {
                               eventItems = _eventItems;
