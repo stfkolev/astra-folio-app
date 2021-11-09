@@ -1,6 +1,4 @@
 
-import 'dart:math';
-
 import 'package:astrafolioproject/models/Event.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,21 +6,31 @@ import 'package:intl/intl.dart';
 
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
-class AddEventDialog extends StatefulWidget {
-  const AddEventDialog({Key? key, required this.onFormSubmit}) : super(key: key);
+class EditEventDialog extends StatefulWidget {
+  const EditEventDialog({Key? key, required this.onFormSubmit, required this.event}) : super(key: key);
 
   final Function(Event) onFormSubmit;
+  final Event event;
 
   @override
-  AddEventState createState() => AddEventState();
+  EditEventState createState() => EditEventState();
 }
 
-class AddEventState extends State<AddEventDialog> {
+class EditEventState extends State<EditEventDialog> {
   final _formKey = GlobalKey<FormState>();
 
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   final dateController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    titleController.text = widget.event.name;
+    descriptionController.text = widget.event.description;
+    dateController.text = widget.event.timestamp.toString();
+  }
 
   @override
   void dispose() {
@@ -45,6 +53,7 @@ class AddEventState extends State<AddEventDialog> {
             Padding(
               padding: EdgeInsets.only(bottom: 16.0),
               child: TextFormField(
+                // initialValue: widget.event.name,
                 controller: titleController,
                 validator: (value) {
                   if(value == null || value.isEmpty)
@@ -71,6 +80,7 @@ class AddEventState extends State<AddEventDialog> {
             Padding(
               padding: EdgeInsets.only(bottom: 16.0),
               child: TextFormField(
+                // initialValue: widget.event.description,
                 controller: descriptionController,
                 validator: (value) {
                   if(value == null || value.isEmpty)
@@ -100,6 +110,7 @@ class AddEventState extends State<AddEventDialog> {
             Padding(
               padding: EdgeInsets.only(bottom: 16.0),
               child: DateTimeField(
+                initialValue: widget.event.timestamp,
                 decoration: InputDecoration(
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
@@ -158,7 +169,7 @@ class AddEventState extends State<AddEventDialog> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         dynamic event = Event(
-                            Random().nextInt(540),
+                            widget.event.id,
                             titleController.text,
                             descriptionController.text,
                             DateTime.parse(dateController.text)
@@ -168,7 +179,7 @@ class AddEventState extends State<AddEventDialog> {
                        Navigator.of(context, rootNavigator: true).pop();
                       }
                     },
-                    child: const Text('Добавяне')
+                    child: const Text('Запазване')
                 ),
               )
             ],)

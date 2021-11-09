@@ -25,50 +25,72 @@ class _SchedulePageState extends State<SchedulePage> {
   List<EventItem> eventItems = [];
 
   dynamic events = [
-    new Event('Audi S4', 'Живко Чукундура', DateTime.now().add(Duration(days: 3))),
-    new Event('BMW X6', 'На Гошо бангията', DateTime.now().add(Duration(hours: 3))),
-    new Event('Ferrari 599 GTB', 'За фолиране на предните джамове, щото не иска пагони да го виждат', DateTime.now().add(Duration(minutes: 48))),
-    new Event('Каручката на бат Милчо', 'За тъпотии само', DateTime.now().add(Duration(days: 1, hours: 1, minutes: 12))),
+    new Event(1, 'Audi S4', 'Живко Чукундура', DateTime.now().add(Duration(days: 3))),
+    new Event(2, 'BMW X6', 'На Гошо бангията', DateTime.now().add(Duration(hours: 3))),
+    new Event(3, 'Ferrari 599 GTB', 'За фолиране на предните джамове, щото не иска пагони да го виждат', DateTime.now().add(Duration(minutes: 48))),
+    new Event(4, 'Каручката на бат Милчо', 'За тъпотии само', DateTime.now().add(Duration(days: 1, hours: 1, minutes: 12))),
   ];
 
   @override
   void initState() {
+    print('test');
     super.initState();
     _resetSelectedDate();
 
     events.forEach(
-            (element) => eventItems.add(EventItem(event: element))
+        (element) => eventItems.add(EventItem(event: element, onEventItemEdited: (ev) {
+          List<EventItem> _eventItems = eventItems;
+
+          print('test');
+
+          _eventItems.forEach((element) {
+            developer.log(element.event.name);
+          });
+
+          _eventItems[_eventItems.indexWhere((element) => element.event.id == ev.id)].event = ev;
+
+          setState(() {
+            eventItems = _eventItems;
+          });
+
+          eventItems.forEach((element) {
+            developer.log(element.event.name);
+          });
+
+          updateEventItems();
+        },))
     );
 
-    eventItems.forEach((element) {
-      if(element.event.timestamp.day == _selectedDate.day) {
-        _selectedEvents.add(element);
-      }
-
-      _selectedEvents.sort((left, right) => left.event.timestamp.compareTo(right.event.timestamp));
-    });
+    updateEventItems();
   }
 
   void _resetSelectedDate() {
     _selectedDate = DateTime.now();
   }
 
+  void updateEventItems() {
+    developer.log('update event items');
+
+    _selectedEvents = [];
+
+    eventItems.forEach((element) {
+      developer.log(element.event.name);
+      if(element.event.timestamp.day == _selectedDate.day) {
+        _selectedEvents.add(element);
+      }
+    });
+
+    _selectedEvents.sort((left, right) => left.event.timestamp.compareTo(right.event.timestamp));
+
+    setState(() {
+      _selectedEvents = _selectedEvents;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     String? swipeDirection = '';
     initializeDateFormatting();
-
-    dynamic updateEventItems() {
-      _selectedEvents = [];
-
-      eventItems.forEach((element) {
-        if(element.event.timestamp.day == _selectedDate.day) {
-          _selectedEvents.add(element);
-        }
-      });
-
-      _selectedEvents.sort((left, right) => left.event.timestamp.compareTo(right.event.timestamp));
-    }
 
     return GestureDetector(
         onPanUpdate: (details) {
@@ -151,27 +173,44 @@ class _SchedulePageState extends State<SchedulePage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
-                    title: Text('Add Event', textAlign: TextAlign.center,),
+                    title: Text('Добавяне на събитие', textAlign: TextAlign.center,),
                     content: Builder(
                       builder: (context) {
                         var height = MediaQuery.of(context).size.height;
                         var width = MediaQuery.of(context).size.width;
 
                         return Container(
-                          height: height - 400,
+                          height: height - 500,
                           width: width + 400,
                           child: AddEventDialog(onFormSubmit: (event) {
-                            developer.log('Title: ${event.name} -- Description: ${event.description} -- Date: ${event.timestamp.toString()}');
-
                             dynamic _eventItems = eventItems;
-                            _eventItems.add(EventItem(event: event));
+                            _eventItems.add(EventItem(event: event, onEventItemEdited: (ev) {
+                              List<EventItem> _eventItems = eventItems;
+
+                              print('test');
+
+                              _eventItems.forEach((element) {
+                                developer.log(element.event.name);
+                              });
+
+                              _eventItems[_eventItems.indexWhere((element) => element.event.id == ev.id)].event = ev;
+
+                              setState(() {
+                                eventItems = _eventItems;
+                              });
+
+                              eventItems.forEach((element) {
+                                developer.log(element.event.name);
+                              });
+
+                              updateEventItems();
+                            },));
 
                             setState(() {
                               eventItems = _eventItems;
                             });
 
                             updateEventItems();
-
                           }),
                         );
                       }
@@ -180,7 +219,7 @@ class _SchedulePageState extends State<SchedulePage> {
                 }
             ),
 
-            tooltip: 'Add Event',
+            tooltip: 'Добави събитие',
             child: Icon(Icons.add),
           ), // This trailing comma makes auto-formatting nicer for build methods.
           bottomNavigationBar: FloatingNavbar(
@@ -193,8 +232,8 @@ class _SchedulePageState extends State<SchedulePage> {
               onTap: (int val) => setState(() => _index = val),
               currentIndex: _index,
               items: [
-                FloatingNavbarItem(icon: Icons.calendar_today, title: 'Schedule'),
-                FloatingNavbarItem(icon: Icons.settings, title: 'Settings'),
+                FloatingNavbarItem(icon: Icons.calendar_today, title: 'График'),
+                FloatingNavbarItem(icon: Icons.settings, title: 'Настройки'),
               ]
           ),
         )
