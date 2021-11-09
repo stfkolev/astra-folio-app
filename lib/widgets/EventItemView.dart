@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:astrafolioproject/models/Event.dart';
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class EventItem extends StatefulWidget {
-  const EventItem ({Key? key, required this.event}): super(key: key);
+  EventItem ({Key? key, required this.event}): super(key: key);
 
   final Event event;
 
@@ -22,13 +23,30 @@ class _EventItemState extends State<EventItem> {
     0xFFE5DBFF
   ];
 
+  late Timer timer;
+  late Duration timeDifference;
+
   @override
   void initState() {
     super.initState();
+    timer = Timer.periodic(Duration(minutes: 1), (timer) {
+      setState(() {
+        timeDifference = widget.event.timestamp.difference(DateTime.now());
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
 
   }
+
   @override
   Widget build(BuildContext context) {
+    Duration timeDifference = widget.event.timestamp.difference(DateTime.now());
+
     return Padding(
         padding: EdgeInsets.all(8.0),
         child: Card(
@@ -80,9 +98,34 @@ class _EventItemState extends State<EventItem> {
                     ),
 
                     Padding(
-                      padding: EdgeInsets.only(left: 8.0),
+                      padding: EdgeInsets.only(left: 4.0, right: 8.0),
                       child: Text(DateFormat.jm().format(widget.event.timestamp)),
                     ),
+
+                   Visibility(
+                     visible: timeDifference.inMinutes > 0,
+                     child: Row(
+                       children: [
+                         Icon(
+                             Icons.access_alarm,
+                             color: Color(0xFF135BFF)
+                         ),
+
+                         Padding(
+                           padding: EdgeInsets.only(left: 4.0),
+                           child:
+                           Text(
+                             'Starts in '
+                                 '${timeDifference.inHours > 0 ? timeDifference.inHours.toString() + ' hours, ' : ''}'
+                                 '${timeDifference.inMinutes.remainder(60)} mins',
+                             style: TextStyle(
+                                 color: Color(0xFF135BFF)
+                             ),
+                           )
+                         ),
+                       ],
+                     ),
+                   )
                   ],),
                 ],
               ),
