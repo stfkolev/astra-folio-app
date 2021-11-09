@@ -76,7 +76,7 @@ class _EventItemState extends State<EventItem> {
                     padding: EdgeInsets.only(right: 4.0),
                     child: Icon(Icons.edit_road, color: Color(0xFF135BFF),)
                 ),
-                Text('Edit')
+                Text('Редактиране')
               ],
             )
           ),
@@ -91,7 +91,7 @@ class _EventItemState extends State<EventItem> {
                   padding: EdgeInsets.only(right: 4.0),
                   child: Icon(Icons.delete_forever_rounded, color: Colors.redAccent,)
                 ),
-                Text('Delete')
+                Text('Изтриване')
               ],
             )
           ),
@@ -205,9 +205,9 @@ class _EventItemState extends State<EventItem> {
                                 padding: EdgeInsets.only(left: 4.0),
                                 child:
                                 Text(
-                                  'Starts in '
-                                      '${timeDifference.inHours > 0 ? timeDifference.inHours.toString() + ' hours, ' : ''}'
-                                      '${timeDifference.inMinutes.remainder(60)} mins',
+                                  'След '
+                                      '${timeDifference.inHours > 0 ? timeDifference.inHours.toString() + ' часа, ' : ''}'
+                                      '${timeDifference.inMinutes.remainder(60)} мин.',
                                   style: TextStyle(
                                       color: Color(0xFF135BFF)
                                   ),
