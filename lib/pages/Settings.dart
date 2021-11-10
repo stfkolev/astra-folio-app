@@ -12,6 +12,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return SettingsList(
+      backgroundColor: Colors.white,
       sections: [
         SettingsSection(
           titleTextStyle: TextStyle(
@@ -22,7 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
           tiles: [
             SettingsTile(
               title: 'Версия',
-              subtitle: 'v1.0.5+1, 10.11.2021г.',
+              subtitle: '1.0.5+1, 10.11.2021г.',
               leading: Icon(Icons.code_rounded),
             ),
             // SettingsTile(

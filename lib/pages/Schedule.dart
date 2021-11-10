@@ -146,7 +146,8 @@ class _SchedulePageState extends State<SchedulePage> {
                   Padding(
                       padding: EdgeInsets.only(top: 32.0),
                       child: Text(
-                          'No events for this day',
+                          'Няма събития за деня',
+                          softWrap: true,
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
