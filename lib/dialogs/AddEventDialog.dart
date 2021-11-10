@@ -39,7 +39,8 @@ class AddEventState extends State<AddEventDialog> {
     return Form(
         key: _formKey,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             // Text('Title', textAlign: TextAlign.start),

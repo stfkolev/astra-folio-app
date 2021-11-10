@@ -8,8 +8,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-import 'dart:developer' as developer;
-
 class SchedulePage extends StatefulWidget {
   SchedulePage({Key? key}) : super(key: key);
 
@@ -182,18 +180,20 @@ class _SchedulePageState extends State<SchedulePage> {
                         var width = MediaQuery.of(context).size.width;
 
                         return Container(
-                          height: height - 500,
+                          height: height - 400,
                           width: width + 400,
-                          child: AddEventDialog(onFormSubmit: (event) {
-                            dynamic _eventItems = eventItems;
-                            _eventItems.add(EventItem(event: event, onEventItemEdited: onEventItemEdited, onEventItemDeleted: onEventItemDeleted,));
+                          child: Center(
+                            child: AddEventDialog(onFormSubmit: (event) {
+                              dynamic _eventItems = eventItems;
+                              _eventItems.add(EventItem(event: event, onEventItemEdited: onEventItemEdited, onEventItemDeleted: onEventItemDeleted,));
 
-                            setState(() {
-                              eventItems = _eventItems;
-                            });
+                              setState(() {
+                                eventItems = _eventItems;
+                              });
 
-                            updateEventItems();
-                          }),
+                              updateEventItems();
+                            }),
+                          ),
                         );
                       }
                     )
