@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kolev.astrafolioproject">
    <application
-        android:label="astrafolioproject"
+        android:label="Astra Folio"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
