@@ -138,7 +138,7 @@ class _SchedulePageState extends State<SchedulePage> {
                   activeDayColor: Colors.white,
                   activeBackgroundDayColor: Color(0xFF135BFF),
                   dotsColor: Colors.white,
-                  locale: 'en',
+                  locale: 'bg',
                 ),
                 Expanded(
                   child:
