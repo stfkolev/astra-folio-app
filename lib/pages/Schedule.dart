@@ -3,7 +3,6 @@ import 'package:astrafolioproject/models/Event.dart';
 import 'package:astrafolioproject/widgets/EventItemView.dart';
 
 import 'package:calendar_timeline/calendar_timeline.dart';
-import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -16,7 +15,6 @@ class SchedulePage extends StatefulWidget {
 }
 
 class _SchedulePageState extends State<SchedulePage> {
-  int _index = 0;
   late DateTime _selectedDate;
   List<EventItem> _selectedEvents = [];
 
@@ -42,7 +40,7 @@ class _SchedulePageState extends State<SchedulePage> {
     updateEventItems();
   }
 
-  onEventItemDeleted(ev) {
+  void onEventItemDeleted(ev) {
     List<EventItem> _eventItems = eventItems;
 
     _eventItems.removeAt(_eventItems.indexWhere((element) => element.event.id == ev.id));
@@ -204,20 +202,6 @@ class _SchedulePageState extends State<SchedulePage> {
             tooltip: 'Добави събитие',
             child: Icon(Icons.add),
           ), // This trailing comma makes auto-formatting nicer for build methods.
-          bottomNavigationBar: FloatingNavbar(
-              backgroundColor: Colors.white70.withOpacity(0.5),
-              borderRadius: 500,
-              itemBorderRadius: 500,
-              unselectedItemColor: Colors.black87,
-              selectedItemColor: Colors.white,
-              selectedBackgroundColor: Color(0xFF135BFF),
-              onTap: (int val) => setState(() => _index = val),
-              currentIndex: _index,
-              items: [
-                FloatingNavbarItem(icon: Icons.calendar_today, title: 'График'),
-                FloatingNavbarItem(icon: Icons.settings, title: 'Настройки'),
-              ]
-          ),
         )
     );
   }

@@ -1,4 +1,8 @@
 import 'package:astrafolioproject/pages/Schedule.dart';
+import 'package:astrafolioproject/pages/Settings.dart';
+import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
+
+import 'package:animations/animations.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,26 +19,62 @@ void main() {
 
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  MyApp({Key? key}) : super(key: key);
+
+  @override
+  AppState createState() => AppState();
+
+}
+
+class AppState extends State<MyApp> {
+  int _index = 0;
+
+  dynamic pages = [
+    SchedulePage(),
+    SettingsPage()
+  ];
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Astra Folio Scheduler',
+      title: 'Astra Folio',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blue
       ),
-      home: SchedulePage(),
+      home: Scaffold(
+        body: PageTransitionSwitcher(
+          transitionBuilder: (
+            child,
+            primaryAnimation,
+            secondaryAnimation
+          ) => FadeThroughTransition(
+            animation: primaryAnimation,
+            secondaryAnimation: secondaryAnimation,
+            // transitionType: SharedAxisTransitionType.horizontal,
+            child: child,
+          ),
+          child: pages[_index],
+        ),
+        bottomNavigationBar: FloatingNavbar(
+          backgroundColor: Colors.white70.withOpacity(0.5),
+          borderRadius: 500,
+          itemBorderRadius: 500,
+          unselectedItemColor: Colors.black87,
+          selectedItemColor: Colors.white,
+          selectedBackgroundColor: Color(0xFF135BFF),
+          onTap: (int val) => setState(() => _index = val),
+          currentIndex: _index,
+          items: [
+            FloatingNavbarItem(icon: Icons.calendar_today, title: 'График'),
+            FloatingNavbarItem(icon: Icons.settings, title: 'Настройки'),
+          ]
+        ),
+      ),
     );
   }
 }
+
+
 

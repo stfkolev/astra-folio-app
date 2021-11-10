@@ -31,6 +31,8 @@ dependencies:
   calendar_timeline: ^0.7.1
   floating_bottom_navigation_bar: ^1.5.2
   datetime_picker_formfield: ^2.0.0
+  animations: ^2.0.2
+  settings_ui: ^1.0.0
 
 dev_dependencies:
   flutter_test:
