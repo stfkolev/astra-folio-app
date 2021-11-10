@@ -206,8 +206,9 @@ class _EventItemState extends State<EventItem> {
                                 child:
                                 Text(
                                   'След '
-                                      '${timeDifference.inHours > 0 ? timeDifference.inHours.toString() + ' часа, ' : ''}'
-                                      '${timeDifference.inMinutes.remainder(60)} мин.',
+                                      '${timeDifference.inDays > 0 ? timeDifference.inDays.toString() + 'д. ' : ''}'
+                                      '${timeDifference.inHours > 0 ? timeDifference.inHours.remainder(24).toString() + 'ч. ' : ''}'
+                                      '${timeDifference.inMinutes.remainder(60)}мин.',
                                   style: TextStyle(
                                       color: Color(0xFF135BFF)
                                   ),
