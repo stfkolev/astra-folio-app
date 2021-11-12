@@ -1,5 +1,7 @@
 import 'package:astrafolioproject/pages/Schedule.dart';
+import 'package:astrafolioproject/pages/ScheduleFirestore.dart';
 import 'package:astrafolioproject/pages/Settings.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 
 import 'package:animations/animations.dart';
@@ -8,15 +10,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([
+
+  await Firebase.initializeApp();
+  await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitDown,
     DeviceOrientation.portraitUp,
-  ]).then((_) =>
-      runApp(MyApp())
-  );
+  ]);
 
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -31,7 +34,7 @@ class AppState extends State<MyApp> {
   int _index = 0;
 
   dynamic pages = [
-    SchedulePage(),
+    ScheduleFirestorePage(),
     SettingsPage()
   ];
 
@@ -41,7 +44,18 @@ class AppState extends State<MyApp> {
     return MaterialApp(
       title: 'Astra Folio',
       theme: ThemeData(
-        primarySwatch: Colors.blue
+        primarySwatch: MaterialColor(0xFF135BFF, {
+          50: Color.fromRGBO(19, 91, 255, .1),
+          100: Color.fromRGBO(19, 91, 255, .2),
+          200: Color.fromRGBO(19, 91, 255, .3),
+          300: Color.fromRGBO(19, 91, 255, .4),
+          400: Color.fromRGBO(19, 91, 255, .5),
+          500: Color.fromRGBO(19, 91, 255, .6),
+          600: Color.fromRGBO(19, 91, 255, .7),
+          700: Color.fromRGBO(19, 91, 255, .8),
+          800: Color.fromRGBO(19, 91, 255, .9),
+          900: Color.fromRGBO(19, 91, 255, 1),
+        })
       ),
       home: Scaffold(
         body: PageTransitionSwitcher(

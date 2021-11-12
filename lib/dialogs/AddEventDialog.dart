@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:astrafolioproject/models/Event.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -159,15 +160,14 @@ class AddEventState extends State<AddEventDialog> {
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        dynamic event = Event(
+                        Event event = Event(
                             Random().nextInt(540),
                             titleController.text,
                             descriptionController.text,
                             DateTime.parse(dateController.text)
                         );
 
-                       widget.onFormSubmit(event);
-                       Navigator.of(context, rootNavigator: true).pop();
+                        widget.onFormSubmit(event);
                       }
                     },
                     child: const Text('Добавяне')

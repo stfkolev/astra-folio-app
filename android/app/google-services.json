@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "987962712937",
+    "firebase_url": "https://newagent-fad63.firebaseio.com",
+    "project_id": "newagent-fad63",
+    "storage_bucket": "newagent-fad63.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:987962712937:android:fdc944000d9e97dd7813f8",
+        "android_client_info": {
+          "package_name": "com.kolev.astrafolioproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "987962712937-qecmifgarkognbn10gbf3qvf9h09d4ls.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7gGyudaYKOD8HxRL1fUobtWwSRcuv5DY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "987962712937-qecmifgarkognbn10gbf3qvf9h09d4ls.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

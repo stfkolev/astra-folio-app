@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Event {
   late int id;
   late String name;
@@ -5,4 +7,13 @@ class Event {
   late DateTime timestamp;
 
   Event(this.id, this.name, this.description, this.timestamp);
+
+  Map<String, Object?> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'timestamp': Timestamp.fromDate(timestamp),
+    };
+  }
 }
